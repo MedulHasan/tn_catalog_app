@@ -7,7 +7,6 @@ import { FlashList } from '@shopify/flash-list';
 import Product from './Product';
 import { ProductType } from '../../utils/types';
 import ItemSeparetor from '../../components/ItemSeparetor';
-import { sleep } from '../../helper/sleep';
 
 const Home = () => {
   const [products, setProducts] = useState<ProductType[]>([]);
@@ -30,10 +29,9 @@ const Home = () => {
     }
   }, [data, isSuccess, skip]);
 
-  const handleLoadMore = useCallback(async () => {
+  const handleLoadMore = useCallback(() => {
     if (data && products.length < data.total && !isLoadingMore) {
       setIsLoadingMore(true);
-      await sleep(2000);
       setSkip(prev => prev + limit);
     }
   }, [data, products, isLoadingMore]);

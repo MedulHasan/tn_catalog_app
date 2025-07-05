@@ -1,11 +1,13 @@
 import { configureStore } from '@reduxjs/toolkit';
 import { apiSlice } from './features/api/apiSlice';
 import authSlice from '../redux/features/user/authSlice';
+import productsSlice from '../redux/features/product/productSlice';
 import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux';
 
 const store = configureStore({
   reducer: {
     auth: authSlice,
+    products: productsSlice,
     [apiSlice.reducerPath]: apiSlice.reducer,
   },
   devTools: __DEV__,

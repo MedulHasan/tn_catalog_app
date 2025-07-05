@@ -1,10 +1,15 @@
-import { View, Image } from 'react-native';
+import { View, Image, Pressable } from 'react-native';
 import React from 'react';
 import { makeStyles } from '../../hooks/makeStyle';
 import { ProductType } from '../../utils/types';
 import CustomText from '../../components/CustomText';
 import { FavouriteSvg } from '../../constant/icons';
 import { Fonts } from '../../constant/fonts';
+import { HIT_SLOP } from '../../constant/variables';
+import { useDispatch } from 'react-redux';
+import { AppDispatch, useAppSelector } from '../../redux/store';
+import { setFavouriteItem } from '../../redux/features/product/productSlice';
+import { useTheme } from '@react-navigation/native';
 
 interface Props {
   item: ProductType;
@@ -12,6 +17,14 @@ interface Props {
 }
 
 const Product: React.FC<Props> = ({ item, isLastIndex }) => {
+  const theme = useTheme();
+  const dispatch = useDispatch<AppDispatch>();
+  const favouriteItems = useAppSelector(state => state.products.favouriteItems);
+  const isFavourite = favouriteItems.findIndex(i => i.id === item.id);
+
+  const handleFavourite = () => {
+    dispatch(setFavouriteItem(item));
+  };
   const styles = useStyle({ isLastIndex });
   return (
     <View style={styles.cont}>
@@ -25,7 +38,13 @@ const Product: React.FC<Props> = ({ item, isLastIndex }) => {
           weight={Fonts.Regular}
         >{`$${item.price}`}</CustomText>
       </View>
-      <FavouriteSvg height={20} width={20} />
+      <Pressable onPress={handleFavourite} hitSlop={HIT_SLOP}>
+        <FavouriteSvg
+          height={20}
+          width={20}
+          fill={isFavourite === -1 ? '' : theme.error[20]}
+        />
+      </Pressable>
     </View>
   );
 };
