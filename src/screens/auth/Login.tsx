@@ -5,19 +5,45 @@ import {
   Platform,
   View,
 } from 'react-native';
-import React from 'react';
+import React, { useState } from 'react';
 import { NavigationProp, useNavigation } from '@react-navigation/native';
 import { RootStackParamList } from '../../navigation/Screens';
 import CustomTextInput from '../../components/CustomTextInput';
 import CustomButton from '../../components/CustomButton';
 import { makeStyles } from '../../hooks/makeStyle';
 import { BagSvg } from '../../constant/icons';
+import { useLoginMutation } from '../../redux/features/user/user';
+import useAlert from '../../hooks/useAlert';
+import { useDispatch } from 'react-redux';
+import { AppDispatch } from '../../redux/store';
+import { setAccessToken } from '../../redux/features/user/authSlice';
 
 const Login = () => {
   const navigation = useNavigation<NavigationProp<RootStackParamList>>();
+  const [login, { isLoading }] = useLoginMutation();
+  const dispatch = useDispatch<AppDispatch>();
+  const { showError, showAlert } = useAlert();
 
-  const handleLogin = () => {
-    navigation.navigate('BottomTab');
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
+
+  const handleLogin = async () => {
+    const payload = {
+      username,
+      password,
+    };
+    const response = await login(payload);
+    if ('data' in response) {
+      dispatch(setAccessToken(response.data.accessToken));
+      navigation.navigate('BottomTab', { screen: 'Home' });
+    } else {
+      if ('status' in response.error && response.error.status === 400) {
+        const errorData = response.error.data as { message: string };
+        showAlert(errorData.message);
+      } else {
+        showError(response.error);
+      }
+    }
   };
 
   const styles = useStyle();
@@ -39,9 +65,22 @@ const Login = () => {
           style={styles.image}
         />
         <View style={styles.form}>
-          <CustomTextInput placeholder="Email" />
-          <CustomTextInput placeholder="Password" />
-          <CustomButton title="Login" onPress={handleLogin} />
+          <CustomTextInput
+            placeholder="Username"
+            value={username}
+            onChangeText={text => setUsername(text)}
+          />
+          <CustomTextInput
+            placeholder="Password"
+            value={password}
+            onChangeText={text => setPassword(text)}
+            secureTextEntry
+          />
+          <CustomButton
+            title="Login"
+            onPress={handleLogin}
+            isLoading={isLoading}
+          />
         </View>
       </ScrollView>
       <View style={{ flex: 0.5 }} />
