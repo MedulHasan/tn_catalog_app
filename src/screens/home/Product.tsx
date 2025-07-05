@@ -1,0 +1,60 @@
+import { View, Image } from 'react-native';
+import React from 'react';
+import { makeStyles } from '../../hooks/makeStyle';
+import { ProductType } from '../../utils/types';
+import CustomText from '../../components/CustomText';
+import { FavouriteSvg } from '../../constant/icons';
+import { Fonts } from '../../constant/fonts';
+
+interface Props {
+  item: ProductType;
+  isLastIndex: boolean;
+}
+
+const Product: React.FC<Props> = ({ item, isLastIndex }) => {
+  const styles = useStyle({ isLastIndex });
+  return (
+    <View style={styles.cont}>
+      <Image source={{ uri: item.thumbnail }} style={styles.image} />
+      <View style={styles.textCont}>
+        <CustomText numberOfLines={1} tag="h1" weight={Fonts.Medium}>
+          {item.title}
+        </CustomText>
+        <CustomText
+          tag="h1"
+          weight={Fonts.Regular}
+        >{`$${item.price}`}</CustomText>
+      </View>
+      <FavouriteSvg height={20} width={20} />
+    </View>
+  );
+};
+
+export default Product;
+
+interface PropsStyle {
+  isLastIndex: boolean;
+}
+
+const useStyle = makeStyles((theme, props: PropsStyle) => ({
+  cont: {
+    flex: 1,
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 12,
+    borderBottomWidth: props.isLastIndex ? 0 : 1,
+    borderBottomColor: theme.border[10],
+    paddingBottom: 8,
+  },
+  image: {
+    height: 100,
+    width: 100,
+    backgroundColor: theme.background[30],
+    borderRadius: 12,
+  },
+  textCont: {
+    flex: 1,
+    gap: 4,
+    marginRight: 5,
+  },
+}));

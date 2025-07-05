@@ -1,17 +1,7 @@
 import { StyleProp, Text, TextStyle } from 'react-native';
 import React from 'react';
 import { makeStyles } from '../hooks/makeStyle';
-
-export enum FontWeight {
-  Thin = 'Thin',
-  UltraLight = 'UltraLight',
-  Light = 'Light',
-  Regular = 'Regular',
-  Medium = 'Medium',
-  SemiBold = 'SemiBold',
-  Bold = 'Bold',
-  ExtraBold = 'ExtraBold',
-}
+import { Fonts } from '../constant/fonts';
 
 interface Props {
   children?: React.ReactNode;
@@ -27,7 +17,7 @@ const CustomText: React.FC<Props> = ({
   children,
   style,
   tag = 'h2',
-  weight = FontWeight.Medium,
+  weight = Fonts.Medium,
   numberOfLines,
   onLayout,
   ...props
@@ -55,7 +45,7 @@ interface StyleProps {
 const useStyle = makeStyles((theme, props: StyleProps) => ({
   common: {
     color: theme.black,
-    fontFamily: 'Gilroy-' + props.weight,
+    fontFamily: props.weight,
   },
   large: {
     fontSize: 30,

@@ -7,11 +7,13 @@ export const createLightTheme = {
   info: '#3EAEFF',
   warning: '#FFA23A',
   error: {
-    90: '#FE5050',
-    100: '#E22739',
+    10: '#FE5050',
+    20: '#E22739',
   },
   background: {
-    100: '#ADB3B8',
+    10: '#E2ECFEBF',
+    20: '#ADB3B8',
+    30: '#E8E8E8',
   },
   border: {
     10: '#D9D9D9',

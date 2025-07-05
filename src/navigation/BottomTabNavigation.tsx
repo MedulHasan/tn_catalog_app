@@ -4,13 +4,16 @@ import Map from '../screens/map/Map';
 import Favourites from '../screens/favourites/Favourites';
 import Home from '../screens/home/Home';
 import TabBar from './TabBar';
+import Header from './Header';
 
 const Tab = createBottomTabNavigator<BottomTabParamList>();
 
 const BottomTabNavigation = () => {
   return (
     <Tab.Navigator
-      screenOptions={{ headerShown: false }}
+      screenOptions={{
+        header: props => <Header {...props} />,
+      }}
       tabBar={props => <TabBar {...props} />}
     >
       <Tab.Screen name="Home" component={Home} />
