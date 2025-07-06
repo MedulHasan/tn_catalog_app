@@ -1,3 +1,10 @@
+## Login Credentials
+
+```bash
+"username": "emilys",
+"password": "emilyspass"
+```
+
 ## Prerequisites
 
 Before you begin, ensure you have the following installed:
