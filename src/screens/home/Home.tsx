@@ -1,3 +1,4 @@
+/* eslint-disable react/no-unstable-nested-components */
 import {ActivityIndicator, View} from 'react-native';
 import React, {useCallback, useEffect, useState} from 'react';
 import {makeStyles} from '../../hooks/makeStyle';
@@ -8,13 +9,14 @@ import Product from './Product';
 import {ProductType} from '../../utils/types';
 import ItemSeparetor from '../../components/ItemSeparetor';
 import FloatingTimestamp from '../../components/FloatingTimestamp';
+import EmptyContent from '../../components/EmptyContent';
 
 const Home = () => {
   const [products, setProducts] = useState<ProductType[]>([]);
   const [skip, setSkip] = useState(0);
   const [isLoadingMore, setIsLoadingMore] = useState(false);
   const limit = 20;
-  const {isLoading, data, isSuccess} = useGetProductsQuery({
+  const {isLoading, data, isSuccess, isError} = useGetProductsQuery({
     limit,
     skip,
   });
@@ -43,6 +45,14 @@ const Home = () => {
   if (isLoading) {
     content = <LoadingModal isVisible={isLoading} />;
   }
+  if (!isLoading && isError) {
+    return (
+      <EmptyContent
+        title="Something went wrong, please refresh you app!"
+        style={{paddingHorizontal: 20}}
+      />
+    );
+  }
   if (!isLoading && isSuccess) {
     content = (
       <FlashList
@@ -58,6 +68,9 @@ const Home = () => {
         onEndReachedThreshold={0.5}
         ListFooterComponent={() => <Footer isLoadingMore={isLoadingMore} />}
         ListFooterComponentStyle={{marginBottom: 20}}
+        ListEmptyComponent={() => (
+          <EmptyContent title="No product available!" />
+        )}
       />
     );
   }

@@ -16,6 +16,7 @@ import {
 } from '@react-navigation/native';
 import {RootStackParamList} from '../../navigation/Screens';
 import ProgressiveImage from '../../components/ProgressiveImage';
+import FastImage from 'react-native-fast-image';
 
 interface Props {
   item: ProductType;
@@ -38,7 +39,10 @@ const Product: React.FC<Props> = ({item, isLastIndex}) => {
   const styles = useStyle({isLastIndex});
   return (
     <Pressable style={styles.cont} onPress={handleDescription}>
-      <ProgressiveImage source={{uri: item.thumbnail}} style={styles.image} />
+      <ProgressiveImage
+        source={{uri: item.thumbnail, priority: FastImage.priority.normal}}
+        style={styles.image}
+      />
       <View style={styles.textCont}>
         <CustomText numberOfLines={1} tag="h1" weight={Fonts.Medium}>
           {item.title}
