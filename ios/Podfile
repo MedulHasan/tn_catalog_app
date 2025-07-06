@@ -17,6 +17,8 @@ end
 target 'tn_catalog_app' do
   config = use_native_modules!
 
+  pod 'react-native-maps-generated', :path => '../node_modules/react-native-maps'
+
   use_react_native!(
     :path => config[:reactNativePath],
     # An absolute path to your application root.

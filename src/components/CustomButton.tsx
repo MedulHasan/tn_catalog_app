@@ -62,8 +62,6 @@ interface StyleProps {
 
 const useStyle = makeStyles((theme, props: StyleProps) => ({
   cont: {
-    // width: '100%',
-    flex: 1,
     borderRadius: 16,
     borderWidth: 1,
     borderColor: (() => {

@@ -30,8 +30,16 @@ const ProductDetails: React.FC<
         {description}
       </CustomText>
       <View style={styles.buttonCont}>
-        <CustomButton title="Add to basket" onPress={() => {}} />
-        <CustomButton title="Buy now" onPress={() => {}} />
+        <CustomButton
+          title="Add to basket"
+          onPress={() => {}}
+          style={styles.button}
+        />
+        <CustomButton
+          title="Buy now"
+          onPress={() => {}}
+          style={styles.button}
+        />
       </View>
     </ScrollView>
   );
@@ -62,5 +70,8 @@ const useStyle = makeStyles(theme => ({
     flexDirection: 'row',
     gap: 8,
     marginTop: 20,
+  },
+  button: {
+    flex: 1,
   },
 }));

@@ -2010,6 +2010,11 @@
   dependencies:
     "@babel/types" "^7.20.7"
 
+"@types/geojson@^7946.0.13":
+  version "7946.0.16"
+  resolved "https://registry.yarnpkg.com/@types/geojson/-/geojson-7946.0.16.tgz#8ebe53d69efada7044454e3305c19017d97ced2a"
+  integrity sha512-6C8nqWur3j98U6+lXDfTUWIfgvZU+EumvpHKcYjujKH7woYyLj2sUmff0tRhrqM7BohUw7Pz3ZB1jj2gW9Fvmg==
+
 "@types/graceful-fs@^4.1.3":
   version "4.1.9"
   resolved "https://registry.yarnpkg.com/@types/graceful-fs/-/graceful-fs-4.1.9.tgz#2a06bc0f68a20ab37b3e36aa238be6abdf49e8b4"
@@ -5911,6 +5916,13 @@ react-native-is-edge-to-edge@^1.1.7:
   version "1.2.1"
   resolved "https://registry.yarnpkg.com/react-native-is-edge-to-edge/-/react-native-is-edge-to-edge-1.2.1.tgz#64e10851abd9d176cbf2b40562f751622bde3358"
   integrity sha512-FLbPWl/MyYQWz+KwqOZsSyj2JmLKglHatd3xLZWskXOpRaio4LfEDEz8E/A6uD8QoTHW6Aobw1jbEwK7KMgR7Q==
+
+react-native-maps@1.22.6:
+  version "1.22.6"
+  resolved "https://registry.yarnpkg.com/react-native-maps/-/react-native-maps-1.22.6.tgz#3eeceb4b774738a0bea6d8b8e1d68df3c4fa6a51"
+  integrity sha512-4aYR+wvxFpYAisSHUtUACt7pVmemdZb/06WUfCjltS1Ag6056EmWxgQd9zwujGpEZf+3j1/O/sWgGAPk6xXy2Q==
+  dependencies:
+    "@types/geojson" "^7946.0.13"
 
 react-native-mmkv@^3.3.0:
   version "3.3.0"
