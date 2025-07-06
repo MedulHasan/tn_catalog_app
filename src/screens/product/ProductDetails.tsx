@@ -51,7 +51,7 @@ const ProductDetails: React.FC<
   return (
     <ScrollView
       style={styles.cont}
-      contentContainerStyle={{flex: 1}}
+      contentContainerStyle={styles.contentContainer}
       showsVerticalScrollIndicator={false}>
       <ProgressiveImage source={{uri: thumbnail}} style={styles.image} />
       <CustomText tag="large" weight={Fonts.SemiBold}>
@@ -84,24 +84,29 @@ export default ProductDetails;
 
 const useStyle = makeStyles(theme => ({
   cont: {
+    flex: 1,
     backgroundColor: theme.white,
+  },
+  contentContainer: {
     paddingHorizontal: 20,
+    paddingBottom: 20,
   },
   image: {
-    height: '50%',
+    height: 300,
     width: '100%',
     justifyContent: 'center',
     alignItems: 'center',
     resizeMode: 'contain',
+    marginBottom: 16,
   },
   descTitle: {
     marginVertical: 20,
   },
   desc: {
     color: theme.text[20],
+    marginBottom: 20,
   },
   buttonCont: {
-    flex: 1,
     flexDirection: 'row',
     gap: 8,
     marginTop: 20,
