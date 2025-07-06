@@ -1,27 +1,28 @@
-import { View, Image, Pressable } from 'react-native';
+import {View, Pressable} from 'react-native';
 import React from 'react';
-import { makeStyles } from '../../hooks/makeStyle';
-import { ProductType } from '../../utils/types';
+import {makeStyles} from '../../hooks/makeStyle';
+import {ProductType} from '../../utils/types';
 import CustomText from '../../components/CustomText';
-import { FavouriteSvg } from '../../constant/icons';
-import { Fonts } from '../../constant/fonts';
-import { HIT_SLOP } from '../../constant/variables';
-import { useDispatch } from 'react-redux';
-import { AppDispatch, useAppSelector } from '../../redux/store';
-import { setFavouriteItem } from '../../redux/features/product/productSlice';
+import {FavouriteSvg} from '../../constant/icons';
+import {Fonts} from '../../constant/fonts';
+import {HIT_SLOP} from '../../constant/variables';
+import {useDispatch} from 'react-redux';
+import {AppDispatch, useAppSelector} from '../../redux/store';
+import {setFavouriteItem} from '../../redux/features/product/productSlice';
 import {
   NavigationProp,
   useNavigation,
   useTheme,
 } from '@react-navigation/native';
-import { RootStackParamList } from '../../navigation/Screens';
+import {RootStackParamList} from '../../navigation/Screens';
+import ProgressiveImage from '../../components/ProgressiveImage';
 
 interface Props {
   item: ProductType;
   isLastIndex: boolean;
 }
 
-const Product: React.FC<Props> = ({ item, isLastIndex }) => {
+const Product: React.FC<Props> = ({item, isLastIndex}) => {
   const theme = useTheme();
   const dispatch = useDispatch<AppDispatch>();
   const navigation = useNavigation<NavigationProp<RootStackParamList>>();
@@ -32,20 +33,19 @@ const Product: React.FC<Props> = ({ item, isLastIndex }) => {
     dispatch(setFavouriteItem(item));
   };
   const handleDescription = () => {
-    navigation.navigate('ProductDetails', { itemDetails: item });
+    navigation.navigate('ProductDetails', {itemDetails: item});
   };
-  const styles = useStyle({ isLastIndex });
+  const styles = useStyle({isLastIndex});
   return (
     <Pressable style={styles.cont} onPress={handleDescription}>
-      <Image source={{ uri: item.thumbnail }} style={styles.image} />
+      <ProgressiveImage source={{uri: item.thumbnail}} style={styles.image} />
       <View style={styles.textCont}>
         <CustomText numberOfLines={1} tag="h1" weight={Fonts.Medium}>
           {item.title}
         </CustomText>
         <CustomText
           tag="h1"
-          weight={Fonts.Regular}
-        >{`$${item.price}`}</CustomText>
+          weight={Fonts.Regular}>{`$${item.price}`}</CustomText>
       </View>
       <Pressable onPress={handleFavourite} hitSlop={HIT_SLOP}>
         <FavouriteSvg

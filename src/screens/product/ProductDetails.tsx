@@ -1,6 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable react/no-unstable-nested-components */
-import {Image, ScrollView, View} from 'react-native';
+import {ScrollView, View} from 'react-native';
 import React, {useLayoutEffect} from 'react';
 import {makeStyles} from '../../hooks/makeStyle';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
@@ -17,6 +17,7 @@ import {FavouriteSvg} from '../../constant/icons';
 import {useDispatch} from 'react-redux';
 import {AppDispatch, useAppSelector} from '../../redux/store';
 import {setFavouriteItem} from '../../redux/features/product/productSlice';
+import ProgressiveImage from '../../components/ProgressiveImage';
 
 const ProductDetails: React.FC<
   NativeStackScreenProps<RootStackParamList, 'ProductDetails'>
@@ -52,7 +53,7 @@ const ProductDetails: React.FC<
       style={styles.cont}
       contentContainerStyle={{flex: 1}}
       showsVerticalScrollIndicator={false}>
-      <Image source={{uri: thumbnail}} style={styles.image} />
+      <ProgressiveImage source={{uri: thumbnail}} style={styles.image} />
       <CustomText tag="large" weight={Fonts.SemiBold}>
         {title}
       </CustomText>
