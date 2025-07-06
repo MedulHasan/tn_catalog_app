@@ -1,19 +1,20 @@
-import { ActivityIndicator, View } from 'react-native';
-import React, { useCallback, useEffect, useState } from 'react';
-import { makeStyles } from '../../hooks/makeStyle';
-import { useGetProductsQuery } from '../../redux/features/product/product';
+import {ActivityIndicator, View} from 'react-native';
+import React, {useCallback, useEffect, useState} from 'react';
+import {makeStyles} from '../../hooks/makeStyle';
+import {useGetProductsQuery} from '../../redux/features/product/product';
 import LoadingModal from '../../components/LoadingModal';
-import { FlashList } from '@shopify/flash-list';
+import {FlashList} from '@shopify/flash-list';
 import Product from './Product';
-import { ProductType } from '../../utils/types';
+import {ProductType} from '../../utils/types';
 import ItemSeparetor from '../../components/ItemSeparetor';
+import FloatingTimestamp from '../../components/FloatingTimestamp';
 
 const Home = () => {
   const [products, setProducts] = useState<ProductType[]>([]);
   const [skip, setSkip] = useState(0);
   const [isLoadingMore, setIsLoadingMore] = useState(false);
   const limit = 20;
-  const { isLoading, data, isSuccess } = useGetProductsQuery({
+  const {isLoading, data, isSuccess} = useGetProductsQuery({
     limit,
     skip,
   });
@@ -46,7 +47,7 @@ const Home = () => {
     content = (
       <FlashList
         data={products}
-        renderItem={({ item, index }) => (
+        renderItem={({item, index}) => (
           <Product item={item} isLastIndex={products.length - 1 === index} />
         )}
         keyExtractor={(_, i) => i.toString()}
@@ -56,11 +57,16 @@ const Home = () => {
         onEndReached={handleLoadMore}
         onEndReachedThreshold={0.5}
         ListFooterComponent={() => <Footer isLoadingMore={isLoadingMore} />}
-        ListFooterComponentStyle={{ marginBottom: 20 }}
+        ListFooterComponentStyle={{marginBottom: 20}}
       />
     );
   }
-  return <View style={styles.cont}>{content}</View>;
+  return (
+    <View style={styles.cont}>
+      <FloatingTimestamp />
+      {content}
+    </View>
+  );
 };
 
 export default Home;
@@ -68,7 +74,7 @@ export default Home;
 interface FooterProps {
   isLoadingMore: boolean;
 }
-const Footer: React.FC<FooterProps> = ({ isLoadingMore }) => {
+const Footer: React.FC<FooterProps> = ({isLoadingMore}) => {
   const styles = useStyle();
   return (
     <View style={styles.footer}>
