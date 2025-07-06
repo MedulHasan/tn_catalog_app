@@ -15,11 +15,14 @@ const Home = () => {
   const [products, setProducts] = useState<ProductType[]>([]);
   const [skip, setSkip] = useState(0);
   const [isLoadingMore, setIsLoadingMore] = useState(false);
+  const [refreshing, setRefreshing] = useState(false);
   const limit = 20;
-  const {isLoading, data, isSuccess, isError} = useGetProductsQuery({
-    limit,
-    skip,
-  });
+  const {isLoading, data, isSuccess, isError, refetch, isFetching} =
+    useGetProductsQuery({
+      limit,
+      skip,
+    });
+  console.log({isFetching, skip});
 
   useEffect(() => {
     if (isSuccess && data?.products) {
@@ -39,10 +42,20 @@ const Home = () => {
     }
   }, [data, products, isLoadingMore]);
 
+  const handleRefresh = useCallback(async () => {
+    setRefreshing(true);
+    setSkip(0);
+    try {
+      await refetch();
+    } finally {
+      setRefreshing(false);
+    }
+  }, [refetch]);
+
   const styles = useStyle();
 
   let content;
-  if (isLoading) {
+  if (isLoading && !refreshing) {
     content = <LoadingModal isVisible={isLoading} />;
   }
   if (!isLoading && isError) {
@@ -66,6 +79,8 @@ const Home = () => {
         estimatedItemSize={109}
         onEndReached={handleLoadMore}
         onEndReachedThreshold={0.5}
+        refreshing={refreshing}
+        onRefresh={handleRefresh}
         ListFooterComponent={() => <Footer isLoadingMore={isLoadingMore} />}
         ListFooterComponentStyle={{marginBottom: 20}}
         ListEmptyComponent={() => (
