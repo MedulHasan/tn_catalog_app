@@ -20,6 +20,7 @@ export const createLightTheme = {
   },
   text: {
     10: '#222222',
+    20: '#768089',
   },
   black: '#000000',
   white: '#FFFFFF',

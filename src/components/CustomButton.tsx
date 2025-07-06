@@ -62,12 +62,13 @@ interface StyleProps {
 
 const useStyle = makeStyles((theme, props: StyleProps) => ({
   cont: {
-    width: '100%',
+    // width: '100%',
+    flex: 1,
     borderRadius: 16,
     borderWidth: 1,
     borderColor: (() => {
       if (props.disabled) {
-        return theme.background[100];
+        return theme.background[20];
       }
       switch (props.type) {
         case ButtonType.Primary:
@@ -79,7 +80,7 @@ const useStyle = makeStyles((theme, props: StyleProps) => ({
     backgroundColor: (() => {
       switch (props.type) {
         case ButtonType.Primary:
-          return props.disabled ? theme.background[100] : theme.primary;
+          return props.disabled ? theme.background[20] : theme.primary;
       }
     })(),
   },

@@ -17,7 +17,7 @@ export const productApi = apiSlice.injectEndpoints({
   endpoints: builder => ({
     getProducts: builder.query<ResponseType, Params>({
       query: ({ limit, skip }) => ({
-        url: `/products?limit=${limit}&skip=${skip}&select=id,thumbnail,title,price`,
+        url: `/products?limit=${limit}&skip=${skip}&select=id,thumbnail,title,price,description`,
       }),
     }),
   }),

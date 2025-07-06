@@ -9,7 +9,12 @@ import { HIT_SLOP } from '../../constant/variables';
 import { useDispatch } from 'react-redux';
 import { AppDispatch, useAppSelector } from '../../redux/store';
 import { setFavouriteItem } from '../../redux/features/product/productSlice';
-import { useTheme } from '@react-navigation/native';
+import {
+  NavigationProp,
+  useNavigation,
+  useTheme,
+} from '@react-navigation/native';
+import { RootStackParamList } from '../../navigation/Screens';
 
 interface Props {
   item: ProductType;
@@ -19,15 +24,19 @@ interface Props {
 const Product: React.FC<Props> = ({ item, isLastIndex }) => {
   const theme = useTheme();
   const dispatch = useDispatch<AppDispatch>();
+  const navigation = useNavigation<NavigationProp<RootStackParamList>>();
   const favouriteItems = useAppSelector(state => state.products.favouriteItems);
   const isFavourite = favouriteItems.findIndex(i => i.id === item.id);
 
   const handleFavourite = () => {
     dispatch(setFavouriteItem(item));
   };
+  const handleDescription = () => {
+    navigation.navigate('ProductDetails', { itemDetails: item });
+  };
   const styles = useStyle({ isLastIndex });
   return (
-    <View style={styles.cont}>
+    <Pressable style={styles.cont} onPress={handleDescription}>
       <Image source={{ uri: item.thumbnail }} style={styles.image} />
       <View style={styles.textCont}>
         <CustomText numberOfLines={1} tag="h1" weight={Fonts.Medium}>
@@ -45,7 +54,7 @@ const Product: React.FC<Props> = ({ item, isLastIndex }) => {
           fill={isFavourite === -1 ? '' : theme.error[20]}
         />
       </Pressable>
-    </View>
+    </Pressable>
   );
 };
 

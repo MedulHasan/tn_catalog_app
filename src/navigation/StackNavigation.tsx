@@ -4,6 +4,7 @@ import Login from '../screens/auth/Login';
 import ProductDetails from '../screens/product/ProductDetails';
 import BottomTabNavigation from './BottomTabNavigation';
 import { useAppSelector } from '../redux/store';
+import DetailsHeader from './DetailsHeader';
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
@@ -16,7 +17,14 @@ const StackNavigation = () => {
     >
       <Stack.Screen name="Login" component={Login} />
       <Stack.Screen name="BottomTab" component={BottomTabNavigation} />
-      <Stack.Screen name="ProductDetails" component={ProductDetails} />
+      <Stack.Screen
+        name="ProductDetails"
+        component={ProductDetails}
+        options={{
+          headerShown: true,
+          header: props => <DetailsHeader {...props} />,
+        }}
+      />
     </Stack.Navigator>
   );
 };
