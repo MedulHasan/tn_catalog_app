@@ -29,8 +29,8 @@ export const useTimestamp = () => {
       return () => clearInterval(interval);
     };
 
-    // Only run on iOS and if native module is available
-    if (Platform.OS !== 'ios' || !TimestampModule || !timestampEventEmitter) {
+    // Only run on iOS/Android and if native module is available
+    if ((Platform.OS !== 'ios' && Platform.OS !== 'android') || !TimestampModule || !timestampEventEmitter) {
       console.warn('TimestampModule not available, using JavaScript fallback');
       return createFallbackTimer();
     }

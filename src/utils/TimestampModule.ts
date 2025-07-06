@@ -11,7 +11,7 @@ interface TimestampModuleInterface {
 
 // Check if the native module is available
 const isNativeModuleAvailable = () => {
-  return Platform.OS === 'ios' && NativeModules.TimestampModule;
+  return (Platform.OS === 'ios' || Platform.OS === 'android') && NativeModules.TimestampModule;
 };
 
 const { TimestampModule } = NativeModules;
