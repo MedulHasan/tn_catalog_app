@@ -8,6 +8,9 @@ import com.facebook.react.modules.core.DeviceEventManagerModule
 import java.text.SimpleDateFormat
 import java.util.*
 
+// Import react-native-config for environment variables
+import com.lugg.RNCConfig.RNCConfigPackage
+
 @ReactModule(name = TimestampModule.NAME)
 class TimestampModule(reactContext: ReactApplicationContext) : ReactContextBaseJavaModule(reactContext) {
 
@@ -30,9 +33,13 @@ class TimestampModule(reactContext: ReactApplicationContext) : ReactContextBaseJ
             dateFormat.timeZone = TimeZone.getTimeZone("UTC")
             val dateString = dateFormat.format(Date())
             
+            // Example of accessing environment variables in native code
+            val env = reactApplicationContext.getResources().getString(reactApplicationContext.getResources().getIdentifier("ENV", "string", reactApplicationContext.getPackageName()))
+            
             val result = Arguments.createMap().apply {
                 putDouble("timestamp", timestamp.toDouble())
                 putString("dateString", dateString)
+                putString("environment", env)
             }
             
             promise.resolve(result)

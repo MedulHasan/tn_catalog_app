@@ -5,17 +5,18 @@ import {
   fetchBaseQuery,
   FetchBaseQueryError,
 } from '@reduxjs/toolkit/query/react';
-import { RootState } from '../../store';
+import {RootState} from '../../store';
+import {ENV} from '../../../utils/env';
 
 const baseQuery: BaseQueryFn<
   string | FetchArgs,
   unknown,
   FetchBaseQueryError
 > = async (args, api, extraOptions) => {
-  const baseUrl = `https://dummyjson.com`;
+  const baseUrl = ENV.API_BASE_URL;
   return fetchBaseQuery({
     baseUrl: baseUrl,
-    prepareHeaders: (headers, { getState }) => {
+    prepareHeaders: (headers, {getState}) => {
       const accessToken = (getState() as RootState).auth.accessToken;
       if (accessToken) {
         headers.set('Authorization', `Bearer ${accessToken}`);
