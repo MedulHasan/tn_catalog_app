@@ -1,24 +1,58 @@
-import { Image, ScrollView, View } from 'react-native';
-import React from 'react';
-import { makeStyles } from '../../hooks/makeStyle';
-import { NativeStackScreenProps } from '@react-navigation/native-stack';
-import { RootStackParamList } from '../../navigation/Screens';
+/* eslint-disable react-hooks/exhaustive-deps */
+/* eslint-disable react/no-unstable-nested-components */
+import {Image, ScrollView, View} from 'react-native';
+import React, {useLayoutEffect} from 'react';
+import {makeStyles} from '../../hooks/makeStyle';
+import {NativeStackScreenProps} from '@react-navigation/native-stack';
+import {RootStackParamList} from '../../navigation/Screens';
 import CustomText from '../../components/CustomText';
-import { Fonts } from '../../constant/fonts';
+import {Fonts} from '../../constant/fonts';
 import CustomButton from '../../components/CustomButton';
+import {
+  NavigationProp,
+  useNavigation,
+  useTheme,
+} from '@react-navigation/native';
+import {FavouriteSvg} from '../../constant/icons';
+import {useDispatch} from 'react-redux';
+import {AppDispatch, useAppSelector} from '../../redux/store';
+import {setFavouriteItem} from '../../redux/features/product/productSlice';
 
 const ProductDetails: React.FC<
   NativeStackScreenProps<RootStackParamList, 'ProductDetails'>
-> = ({ route }) => {
-  const { thumbnail, title, price, description } = route.params.itemDetails;
+> = ({route}) => {
+  const {thumbnail, title, price, description} = route.params.itemDetails;
+  const theme = useTheme();
+  const navigation = useNavigation<NavigationProp<RootStackParamList>>();
+  const dispatch = useDispatch<AppDispatch>();
+  const favouriteItems = useAppSelector(state => state.products.favouriteItems);
+  const isFavourite = favouriteItems.findIndex(
+    i => i.id === route.params.itemDetails.id,
+  );
+
+  const handleFavourite = () => {
+    dispatch(setFavouriteItem(route.params.itemDetails));
+  };
+
+  useLayoutEffect(() => {
+    navigation.setOptions({
+      headerRight: () => (
+        <FavouriteSvg
+          height={28}
+          width={28}
+          onPress={handleFavourite}
+          fill={isFavourite === -1 ? '' : theme.error[20]}
+        />
+      ),
+    });
+  }, [navigation, isFavourite]);
   const styles = useStyle();
   return (
     <ScrollView
       style={styles.cont}
-      contentContainerStyle={{ flex: 1 }}
-      showsVerticalScrollIndicator={false}
-    >
-      <Image source={{ uri: thumbnail }} style={styles.image} />
+      contentContainerStyle={{flex: 1}}
+      showsVerticalScrollIndicator={false}>
+      <Image source={{uri: thumbnail}} style={styles.image} />
       <CustomText tag="large" weight={Fonts.SemiBold}>
         {title}
       </CustomText>
