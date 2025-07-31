@@ -1,9 +1,8 @@
-import { NavigatorScreenParams } from '@react-navigation/native';
-import { ProductType } from '../utils/types';
+import {NavigatorScreenParams} from '@react-navigation/native';
 
 export type RootStackParamList = {
   Login: undefined;
-  ProductDetails: { itemDetails: ProductType };
+  ProductDetails: {id: number};
   BottomTab: NavigatorScreenParams<BottomTabParamList>;
 };
 

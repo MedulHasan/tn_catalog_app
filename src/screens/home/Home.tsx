@@ -17,12 +17,10 @@ const Home = () => {
   const [isLoadingMore, setIsLoadingMore] = useState(false);
   const [refreshing, setRefreshing] = useState(false);
   const limit = 20;
-  const {isLoading, data, isSuccess, isError, refetch, isFetching} =
-    useGetProductsQuery({
-      limit,
-      skip,
-    });
-  console.log({isFetching, skip});
+  const {isLoading, data, isSuccess, isError, refetch} = useGetProductsQuery({
+    limit,
+    skip,
+  });
 
   useEffect(() => {
     if (isSuccess && data?.products) {

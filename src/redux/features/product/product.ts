@@ -1,7 +1,7 @@
-import { ProductType } from '../../../utils/types';
-import { apiSlice } from '../api/apiSlice';
+import {ProductType} from '../../../utils/types';
+import {apiSlice} from '../api/apiSlice';
 
-interface ResponseType {
+export interface ResponseType {
   products: ProductType[];
   total: number;
   skip: number;
@@ -13,14 +13,23 @@ interface Params {
   skip: number;
 }
 
+interface DetailsParams {
+  id: number;
+}
+
 export const productApi = apiSlice.injectEndpoints({
   endpoints: builder => ({
     getProducts: builder.query<ResponseType, Params>({
-      query: ({ limit, skip }) => ({
+      query: ({limit, skip}) => ({
         url: `/products?limit=${limit}&skip=${skip}&select=id,thumbnail,title,price,description`,
+      }),
+    }),
+    getProductDetails: builder.query<ProductType, DetailsParams>({
+      query: ({id}) => ({
+        url: `/products/${id}?select=id,thumbnail,title,price,description`,
       }),
     }),
   }),
 });
 
-export const { useGetProductsQuery } = productApi;
+export const {useGetProductsQuery, useGetProductDetailsQuery} = productApi;

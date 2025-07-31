@@ -3,14 +3,23 @@ import React from 'react';
 import {NativeStackHeaderProps} from '@react-navigation/native-stack';
 import {LeftArroeSvg} from '../constant/icons';
 import {makeStyles} from '../hooks/makeStyle';
+import {NavigationProp, useNavigation} from '@react-navigation/native';
+import {RootStackParamList} from './Screens';
 
-const DetailsHeader: React.FC<NativeStackHeaderProps> = ({
-  navigation,
-  options,
-}) => {
+const DetailsHeader: React.FC<NativeStackHeaderProps> = ({options}) => {
+  const navigation = useNavigation<NavigationProp<RootStackParamList>>();
+  const handlePress = () => {
+    if (navigation.canGoBack()) {
+      navigation.goBack();
+    } else {
+      navigation.navigate('BottomTab', {
+        screen: 'Home',
+      });
+    }
+  };
   const styles = useStyle();
   return (
-    <Pressable style={styles.cont} onPress={() => navigation.goBack()}>
+    <Pressable style={styles.cont} onPress={handlePress}>
       <LeftArroeSvg height={36} width={36} />
       {options.headerRight && (
         <View>{options.headerRight({canGoBack: false})}</View>

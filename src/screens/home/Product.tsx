@@ -34,7 +34,7 @@ const Product: React.FC<Props> = ({item, isLastIndex}) => {
     dispatch(setFavouriteItem(item));
   };
   const handleDescription = () => {
-    navigation.navigate('ProductDetails', {itemDetails: item});
+    navigation.navigate('ProductDetails', {id: item.id});
   };
   const styles = useStyle({isLastIndex});
   return (
