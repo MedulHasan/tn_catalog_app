@@ -21,7 +21,7 @@ import ProgressiveImage from '../../components/ProgressiveImage';
 import {useGetProductDetailsQuery} from '../../redux/features/product/product';
 import LoadingModal from '../../components/LoadingModal';
 import EmptyContent from '../../components/EmptyContent';
-import {appPrefixes, product} from '../../constant/linkRoute';
+import {productDetailsAppLink} from '../../constant/linkRoute';
 
 const ProductDetails: React.FC<
   NativeStackScreenProps<RootStackParamList, 'ProductDetails'>
@@ -41,7 +41,8 @@ const ProductDetails: React.FC<
 
   const handleShare = () => {
     Share.share({
-      message: `Check this out: ${appPrefixes}${product}/${id}`,
+      message: `Check this out: ${productDetailsAppLink}${id}`,
+      url: productDetailsAppLink + id,
     });
   };
 

@@ -1,2 +1,3 @@
 export const appPrefixes = 'com.medul://';
-export const product = 'product';
+export const productDetailsAppLink =
+  'https://tn-catalog-app.netlify.app/product/';

@@ -29,6 +29,14 @@
             <category android:name="android.intent.category.BROWSABLE" />
             <data android:scheme="com.medul" />
         </intent-filter>
+          <intent-filter android:autoVerify="true">
+              <action android:name="android.intent.action.VIEW" />
+              <category android:name="android.intent.category.DEFAULT" />
+              <category android:name="android.intent.category.BROWSABLE" />
+              <data android:scheme="https" />
+              <data android:host="tn-catalog-app.netlify.app" />
+              <data android:pathPrefix="/product/" />
+          </intent-filter>
       </activity>
        <meta-data
         android:name="com.google.android.geo.API_KEY"

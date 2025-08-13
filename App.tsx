@@ -4,14 +4,13 @@ import {LinkingOptions, NavigationContainer} from '@react-navigation/native';
 import {SafeAreaProvider, SafeAreaView} from 'react-native-safe-area-context';
 import {createLightTheme} from './src/theme/theme';
 import {RootStackParamList} from './src/navigation/Screens';
-import {appPrefixes, product} from './src/constant/linkRoute';
 
 function App() {
   const linking: LinkingOptions<RootStackParamList> = {
-    prefixes: [appPrefixes, 'https://reactnative.dev/'],
+    prefixes: ['https://tn-catalog-app.netlify.app', 'com.medul://'],
     config: {
       screens: {
-        ProductDetails: `${product}/:id`,
+        ProductDetails: 'product/:id',
       },
     },
   };
