@@ -1,0 +1,29 @@
+name: CI/CD for catalog app
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+    inputs:
+      android:
+        type: boolean
+        default: true
+      ios:
+        type: boolean
+        default: false
+
+jobs:
+  build:
+    runs-on: macos-26
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v5
+
+      - name: Android Build
+        if: ${{github.ref_name == 'dev' && inputs.android}}
+        uses: ./.github/actions/android.yml
+
+      - name: IOS Build
+        if: ${{github.ref_name == 'dev' && inputs.ios}}
+        uses: ./.github/actions/android.yml

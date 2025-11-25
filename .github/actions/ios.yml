@@ -1,0 +1,7 @@
+name: IOS build
+
+runs:
+  using: 'composite'
+  steps:
+    - name: Print
+      run: echo "IOS building"

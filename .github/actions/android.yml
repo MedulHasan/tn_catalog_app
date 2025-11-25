@@ -1,0 +1,7 @@
+name: Android build
+
+runs:
+  using: 'composite'
+  steps:
+    - name: Print
+      run: echo "Android building"
