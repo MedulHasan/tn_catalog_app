@@ -21,9 +21,9 @@ jobs:
         uses: actions/checkout@v5
 
       - name: Android Build
-        if: ${{github.ref_name == 'dev' && inputs.android}}
+        if: ${{github.event_name == 'workflow_dispatch' && github.ref_name == 'dev' && inputs.android}}
         uses: ./.github/actions/android
 
       - name: IOS Build
-        if: ${{github.ref_name == 'dev' && inputs.ios}}
+        if: ${{github.event_name == 'workflow_dispatch' && github.ref_name == 'dev' && inputs.ios}}
         uses: ./.github/actions/ios
