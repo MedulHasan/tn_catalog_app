@@ -20,10 +20,14 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v5
 
+      - name: print
+        run: |
+          echo "${{github.ref_name}} - ${{inputs.android}} - ${{inputs.IOS}}"
+
       - name: Android Build
-        if: ${{github.event_name == 'workflow_dispatch' && github.ref_name == 'dev' && inputs.android}}
+        if: ${{github.ref_name == 'dev' && inputs.android}}
         uses: ./.github/actions/android
 
       - name: IOS Build
-        if: ${{github.event_name == 'workflow_dispatch' && github.ref_name == 'dev' && inputs.ios}}
+        if: ${{github.ref_name == 'dev' && inputs.ios}}
         uses: ./.github/actions/ios
