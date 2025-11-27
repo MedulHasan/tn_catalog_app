@@ -25,9 +25,9 @@ jobs:
           echo "${{github.ref_name}} - ${{inputs.android}} - ${{inputs.IOS}}"
 
       - name: Android Build
-        if: ${{github.ref_name == 'dev' && inputs.android}}
+        if: ${{github.ref_name == 'mh/dev' && inputs.android}}
         uses: ./.github/actions/android
 
       - name: IOS Build
-        if: ${{github.ref_name == 'dev' && inputs.ios}}
+        if: ${{github.ref_name == 'mh/dev' && inputs.ios}}
         uses: ./.github/actions/ios
