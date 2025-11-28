@@ -14,20 +14,32 @@ on:
         default: false
 
 jobs:
-  build:
+  get-code:
     runs-on: macos-26
     steps:
       - name: Checkout
         uses: actions/checkout@v5
 
-      - name: print
-        run: |
-          echo "${{github.ref_name}} - ${{inputs.android}} - ${{inputs.IOS}}"
+      - name: Install Dependency
+        run: yarn install --frozen-lockfile
 
+  dev-build:
+    needs: 'get-code'
+    if: ${{github.ref_name == 'mh/dev'}}
+    runs-on: macos-26
+    steps:
       - name: Android Build
-        if: ${{github.ref_name == 'mh/dev' && inputs.android}}
+        if: ${{inputs.android}}
         uses: ./.github/actions/android
 
       - name: IOS Build
-        if: ${{github.ref_name == 'mh/dev' && inputs.ios}}
+        if: ${{inputs.ios}}
         uses: ./.github/actions/ios
+
+  prod-build:
+    needs: 'get-code'
+    if: ${{github.ref_name == 'main'}}
+    runs-on: macos-26
+    steps:
+      - name: Build Production
+        run: echo "Prod Build"
