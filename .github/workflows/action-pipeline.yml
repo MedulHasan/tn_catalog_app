@@ -14,32 +14,29 @@ on:
         default: false
 
 jobs:
-  get-code:
+  build:
     runs-on: macos-26
     steps:
       - name: Checkout
         uses: actions/checkout@v5
 
+      - name: Setup Node
+        uses: actions/setup-node@v6
+        with:
+          node-version: '22'
+          cache: 'yarn'
+
       - name: Install Dependency
         run: yarn install --frozen-lockfile
 
-  dev-build:
-    needs: 'get-code'
-    if: ${{github.ref_name == 'mh/dev'}}
-    runs-on: macos-26
-    steps:
       - name: Android Build
-        if: ${{inputs.android}}
+        if: ${{ github.ref_name == 'mh/dev' && inputs.android}}
         uses: ./.github/actions/android
 
       - name: IOS Build
-        if: ${{inputs.ios}}
+        if: ${{github.ref_name == 'mh/dev' && inputs.ios}}
         uses: ./.github/actions/ios
 
-  prod-build:
-    needs: 'get-code'
-    if: ${{github.ref_name == 'main'}}
-    runs-on: macos-26
-    steps:
       - name: Build Production
+        if: ${{github.ref_name == 'main'}}
         run: echo "Prod Build"
