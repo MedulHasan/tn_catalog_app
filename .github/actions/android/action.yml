@@ -1,14 +1,18 @@
 name: Android build
-
 runs:
   using: 'composite'
-  steps:
-    - name: Decode Android Keystore
-      shell: bash
-      run: |
-        echo "$ANDROID_KEYSTORE_BASE64" | base64 --decode > android/app/catalog.jks
-      env:
-        ANDROID_KEYSTORE_BASE64: ${{ secrets.ANDROID_KEYSTORE_BASE64 }}
 
-    - name: Check keystore
-      run: ls -l android/app/
+inputs:
+  keystoreBase64:
+    required: true
+    description: Base64 encoded keystore
+
+steps:
+  - name: Decode Android Keystore
+    shell: bash
+    run: |
+      echo "${{ inputs.keystoreBase64 }}" | base64 --decode > android/app/catalog.jks
+
+  - name: Check keystore
+    shell: bash
+    run: ls -l android/app/

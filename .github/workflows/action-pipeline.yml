@@ -32,6 +32,8 @@ jobs:
       - name: Android Build
         if: ${{ github.ref_name == 'mh/dev' && inputs.android}}
         uses: ./.github/actions/android
+        with:
+          keystoreBase64: ${{ secrets.ANDROID_KEYSTORE_BASE64 }}
 
       - name: IOS Build
         if: ${{github.ref_name == 'mh/dev' && inputs.ios}}
