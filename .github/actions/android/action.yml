@@ -8,4 +8,5 @@ runs:
       run: echo "Android building"
 
     - name: Download Android Keystore file
+      shell: bash
       run: echo "Test Download"
