@@ -6,3 +6,6 @@ runs:
     - name: Print
       shell: bash
       run: echo "Android building"
+
+    - name: Download Android Keystore file
+      run: echo "Test Download"
