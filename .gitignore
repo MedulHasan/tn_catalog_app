@@ -76,3 +76,4 @@ yarn-error.log
 .env
 ENVIRONMENT_SETUP.md
 setup-env.sh
+android/app/catalog.jks

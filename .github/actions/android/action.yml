@@ -2,12 +2,7 @@ name: Android build
 
 runs:
   using: 'composite'
-  defaults:
-    run:
-      shell: bash
   steps:
-    - name: Print
-      run: echo "Android building"
-
     - name: Download Android Keystore file
+      shell: bash
       run: echo "Test Download"
