@@ -1,12 +1,12 @@
 name: Android build
-runs:
-  using: 'composite'
 
 inputs:
   keystoreBase64:
     required: true
     description: Base64 encoded keystore
 
+runs:
+  using: 'composite'
 steps:
   - name: Decode Android Keystore
     shell: bash
