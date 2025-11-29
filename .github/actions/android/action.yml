@@ -13,7 +13,7 @@ runs:
   steps:
     - name: Before Check apk
       shell: bash
-      run: ls -l android/app/build/outputs/apk/release/*apk
+      run: ls -l android/app/build/outputs/apk/release/*apk || echo "No APK yet"
     - name: Decode & Store Android Keystore
       shell: bash
       run: echo "${{ inputs.keystoreBase64 }}" | base64 --decode > android/app/catalog.jks
