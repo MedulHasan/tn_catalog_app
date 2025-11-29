@@ -34,6 +34,8 @@ jobs:
         uses: ./.github/actions/android
         with:
           keystoreBase64: ${{ secrets.ANDROID_KEYSTORE_BASE64 }}
+          keyPassword: ${{ secrets.ANDROID_KEY_PASSWORD }}
+          keyAlise: ${{ secrets.ANDROID_KEY_ALIAS }}
 
       - name: IOS Build
         if: ${{github.ref_name == 'mh/dev' && inputs.ios}}
