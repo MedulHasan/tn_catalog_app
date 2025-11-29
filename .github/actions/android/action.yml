@@ -3,6 +3,12 @@ name: Android build
 runs:
   using: 'composite'
   steps:
-    - name: Download Android Keystore file
+    - name: Decode Android Keystore
       shell: bash
-      run: echo "Test Download"
+      run: |
+        echo "$ANDROID_KEYSTORE_BASE64" | base64 --decode > android/app/catalog.jks
+      env:
+        ANDROID_KEYSTORE_BASE64: ${{ secrets.ANDROID_KEYSTORE_BASE64 }}
+
+    - name: Check keystore
+      run: ls -l android/app/
