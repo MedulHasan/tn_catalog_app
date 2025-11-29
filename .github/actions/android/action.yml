@@ -5,7 +5,7 @@ inputs:
     required: true
   keyPassword:
     required: true
-  keyAlise:
+  keyAlias:
     required: true
 
 runs:
@@ -19,7 +19,7 @@ runs:
       run: echo "${{ inputs.keystoreBase64 }}" | base64 --decode > android/app/catalog.jks
     - name: Build APK
       shell: bash
-      run: cd android && ./gradlew assembleRelease -PkeyPassword=${{ inputs.keyPassword }} -PkeyAlias=${{ inputs.keyAlise }}
+      run: cd android && ./gradlew assembleRelease -PkeyPassword=${{ inputs.keyPassword }} -PkeyAlias=${{ inputs.keyAlias }}
     - name: After Check apk
       shell: bash
       run: ls -l android/app/build/outputs/apk/release/*apk
