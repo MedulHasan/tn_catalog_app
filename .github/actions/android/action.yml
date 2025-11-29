@@ -10,9 +10,8 @@ runs:
   steps:
     - name: Decode Android Keystore
       shell: bash
-      run: |
-        echo "${{ inputs.keystoreBase64 }}" | base64 --decode > android/app/catalog.jks
+      run: base64 --decode > android/app/catalog.jks
 
     - name: Check keystore
       shell: bash
-      run: ls -l android/app/
+      run: ls -l android/app/*jks
