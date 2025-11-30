@@ -39,11 +39,16 @@ runs:
       with:
         name: app-release-apk
         path: ./apk
+    - name: Get current versionCode
+      id: get_version
+      run: |
+        currentVersionCode=`awk '/versionCode/ {print $2}' android/app/build.gradle`
+        echo "currentVersionCode=$currentVersionCode" >> $GITHUB_OUTPUT
     - name: Create GitHub Release
       uses: softprops/action-gh-release@v2
       with:
         tag_name: ${{ github.ref_name }}
-        name: 'Android Release ${{ github.ref_name }}'
+        name: 'Android Release ${{ github.ref_name }} - ${{step.get_version.outputs.currentVersionCode}}'
         body: |
           🎉 New Android release build
           Built automatically from commit: ${{ github.sha }}

@@ -54,3 +54,16 @@ jobs:
       - name: Build Production
         if: ${{github.ref_name == 'main'}}
         run: echo "Prod Build"
+
+      - name: Bump Android versionCode
+        run: |
+          oldVersionCode=`awk '/versionCode/ {print $2}' android/app/build.gradle`
+          newVersionCode=$(($oldVersionCode + 1))
+          sed -i '' 's/versionCode.*/versionCode '$newVersionCode'/' android/app/build.gradle
+      - name: Commit change
+        run: |
+          git fetch
+          git checkout ${{ github.ref_name }}
+          git add android/app/build.gradle
+          git commit -m "Update build number"
+          git push origin ${{github.ref_name}}
