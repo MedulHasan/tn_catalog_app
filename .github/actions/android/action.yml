@@ -11,19 +11,22 @@ inputs:
 runs:
   using: 'composite'
   steps:
-    - name: Before Check apk
-      shell: bash
-      run: ls -l android/app/build/outputs/apk/release/*apk || echo "No APK yet"
+    - name: Setup Java 17
+      uses: actions/setup-java@v4
+      with:
+        distribution: 'zulu'
+        java-version: '17'
     - name: Decode & Store Android Keystore
       shell: bash
       run: |
         echo "${{ inputs.keystoreBase64 }}" | base64 --decode > android/app/catalog.jks
-    - name: Check keystore file
+    - name: Make gradlew executable (Grant Permission)
       shell: bash
-      run: ls -l android/app
+      run: chmod +x android/gradlew
     - name: Build APK
       shell: bash
-      run: cd android && ./gradlew assembleRelease -PkeyPassword=${{ inputs.keyPassword }} -PkeyAlias=${{ inputs.keyAlias }}
+      working-directory: android
+      run: ./gradlew assembleRelease -PkeyPassword=${{ inputs.keyPassword }} -PkeyAlias=${{ inputs.keyAlias }}
     - name: After Check apk
       shell: bash
-      run: ls -l android/app/build/outputs/apk/release/*apk
+      run: ls -l app/build/outputs/apk/release/*apk
