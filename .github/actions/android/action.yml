@@ -1,6 +1,8 @@
 name: Android build
 
 inputs:
+  githubToken:
+    required: true
   keystoreBase64:
     required: true
   keyPassword:
@@ -27,6 +29,30 @@ runs:
       shell: bash
       working-directory: android
       run: ./gradlew assembleRelease -PkeyPassword=${{ inputs.keyPassword }} -PkeyAlias=${{ inputs.keyAlias }}
+    - name: Upload artifacts
+      uses: actions/upload-artifact@v4
+      with:
+        name: app-release-apk
+        path: android/app/build/outputs/apk/release/app-release.apk
+    - name: Download build artifacts
+      uses: actions/download-artifact@v5
+      with:
+        name: app-release-apk
+        path: ./apk
+    - name: Create GitHub Release
+      uses: softprops/action-gh-release@v2
+      with:
+        tag_name: ${{ github.ref_name }}
+        name: 'Android Release ${{ github.ref_name }}'
+        body: |
+          🎉 New Android release build
+          Built automatically from commit: ${{ github.sha }}
+        files: ./apk/app-release.apk
+        overwrite_files: true
+      env:
+        GITHUB_TOKEN: ${{ inputs.githubToken }}
+    - name: Deploy
+      run: echo "Deploying..."
     - name: After Check apk
       shell: bash
-      run: ls -l app/build/outputs/apk/release/*apk
+      run: ls -l android/app/build/outputs/apk/release/*apk

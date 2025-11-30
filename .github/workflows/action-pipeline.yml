@@ -39,6 +39,7 @@ jobs:
         if: ${{ github.ref_name == 'mh/dev' && inputs.android}}
         uses: ./.github/actions/android
         with:
+          githubToken: ${{ secrets.GITHUB_TOKEN }}
           keystoreBase64: ${{ secrets.ANDROID_KEYSTORE_BASE64 }}
           keyPassword: ${{ secrets.ANDROID_KEY_PASSWORD }}
           keyAlias: ${{ secrets.ANDROID_KEY_ALIAS }}
