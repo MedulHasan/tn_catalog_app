@@ -49,7 +49,7 @@ runs:
       uses: softprops/action-gh-release@v2
       with:
         tag_name: ${{ github.ref_name }}
-        name: 'Android Release ${{ github.ref_name }} - ${{step.get_version.outputs.currentVersionCode}}'
+        name: 'Android Release ${{ github.ref_name }} - ${{steps.get_version.outputs.currentVersionCode}}'
         body: |
           🎉 New Android release build
           Built automatically from commit: ${{ github.sha }}
